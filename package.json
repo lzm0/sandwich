@@ -1,0 +1,12 @@
+{
+  "name": "sandwich",
+  "version": "1.0.0",
+  "description": "SANDboxed Web Interactive Command Host",
+  "main": "index.js",
+  "author": "Zimo Li",
+  "license": "MIT",
+  "dependencies": {
+    "node-pty": "^1.0.0",
+    "ws": "^8.17.0"
+  }
+}

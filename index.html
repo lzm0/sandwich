@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sanwich Playground</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@xterm/xterm@5.5.0/css/xterm.css"
+    />
+  </head>
+  <body>
+    <div id="terminal"></div>
+    <script src="https://unpkg.com/@xterm/xterm@5.5.0/lib/xterm.js"></script>
+    <script src="https://unpkg.com/@xterm/addon-attach@0.11.0/lib/addon-attach.js"></script>
+    <script src="https://unpkg.com/@xterm/addon-fit@0.10.0/lib/addon-fit.js"></script>
+    <script>
+      const term = new Terminal();
+      const socket = new WebSocket("ws://localhost:3000/");
+
+      const websocketAddon = new AttachAddon.AttachAddon(socket);
+      const resizeAddon = new FitAddon.FitAddon();
+
+      term.loadAddon(websocketAddon);
+      term.loadAddon(resizeAddon);
+
+      term.open(document.getElementById("terminal"));
+
+      resizeAddon.fit();
+      window.addEventListener("resize", () => resizeAddon.fit());
+    </script>
+  </body>
+</html>
