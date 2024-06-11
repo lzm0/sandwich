@@ -11,12 +11,15 @@ server.on("listening", () => {
   console.log(`Listening on port ${server.address().port}`);
 });
 
-server.on("connection", (socket) => {
+server.on("connection", (socket, req) => {
+  console.log(`Connected to ${req.socket.remoteAddress}`);
+  socket.isAlive = true;
   const term = pty.spawn(
     "/usr/bin/docker",
     ["exec", "-it", "sandbox", "/bin/bash"],
     { name: "xterm-color" }
   );
+  socket.term = term;
 
   setTimeout(() => term.kill(), HARD_TIMEOUT);
 
@@ -31,6 +34,31 @@ server.on("connection", (socket) => {
   });
 
   socket.on("close", () => {
+    console.log(`Disconnected from ${req.socket.remoteAddress}`);
     term.kill();
   });
+
+  socket.on("pong", heartbeat);
+
+  socket.on("error", console.error);
 });
+
+const sweepInterval = setInterval(sweep, 3000);
+
+server.on("close", () => {
+  clearInterval(sweepInterval);
+});
+
+function heartbeat() {
+  this.isAlive = true;
+}
+
+function sweep() {
+  server.clients.forEach((socket) => {
+    if (socket.isAlive === false) {
+      socket.terminate();
+      socket.term.kill();
+    }
+    socket.ping();
+  });
+}
