@@ -24,6 +24,7 @@
       term.loadAddon(resizeAddon);
 
       term.open(document.getElementById("terminal"));
+      term.focus();
 
       resizeAddon.fit();
       window.addEventListener("resize", () => resizeAddon.fit());
