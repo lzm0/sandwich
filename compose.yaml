@@ -24,7 +24,6 @@ services:
     hostname: ubuntu
     init: true
     tty: true
-    restart: always
     security_opt:
       - no-new-privileges:true
     network_mode: none
@@ -37,3 +36,21 @@ services:
         limits:
           cpus: '0.1'
           memory: 50M
+
+  caddy:
+    container_name: caddy
+    image: caddy:latest
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    command: caddy reverse-proxy --from ca.zimo.li --to :3000
+
+volumes:
+  caddy_data:
+  caddy_config:
