@@ -2,12 +2,13 @@ services:
   app:
     container_name: app
     build: ./app
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     expose:
       - "3000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
     develop:
       watch:
         - path: ./app
@@ -27,6 +28,7 @@ services:
     security_opt:
       - no-new-privileges:true
     network_mode: none
+    restart: always
     develop:
       watch:
         - path: ./sandbox
@@ -48,9 +50,7 @@ services:
       - "443:443/udp"
     volumes:
       - caddy_data:/data
-      - caddy_config:/config
     command: caddy reverse-proxy --from ca.zimo.li --to :3000
 
 volumes:
   caddy_data:
-  caddy_config:
