@@ -50,7 +50,7 @@ services:
       - "443:443/udp"
     volumes:
       - caddy_data:/data
-    command: caddy reverse-proxy --from ca.zimo.li --to app:3000
+    command: caddy reverse-proxy --from terminal.zimo.li --to app:3000
 
 volumes:
   caddy_data:
