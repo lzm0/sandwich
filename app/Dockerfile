@@ -11,3 +11,4 @@ RUN npm ci
 
 ENV PORT=3000
 CMD ["node", "index.mjs"]
+EXPOSE 3000

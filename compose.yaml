@@ -2,10 +2,8 @@ services:
   app:
     container_name: app
     build: ./app
-    # ports:
-    #   - "3000:3000"
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
@@ -38,19 +36,3 @@ services:
         limits:
           cpus: '0.1'
           memory: 50M
-
-  caddy:
-    container_name: caddy
-    image: caddy:latest
-    cap_add:
-      - NET_ADMIN
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    volumes:
-      - caddy_data:/data
-    command: caddy reverse-proxy --from terminal.zimo.li --to app:3000
-
-volumes:
-  caddy_data:
