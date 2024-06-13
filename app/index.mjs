@@ -8,7 +8,7 @@ const HARD_RESET_INTERVAL = 30 * 60 * 1000;
 const SWEEP_INTERVAL = 30 * 1000;
 const MAX_SESSIONS = 10;
 
-const server = new WebSocketServer({ port: process.env.PORT });
+const server = new WebSocketServer({ host: "0.0.0.0", port: process.env.PORT });
 
 server.on("listening", () => {
   console.log(`Listening on port ${server.address().port}`);
