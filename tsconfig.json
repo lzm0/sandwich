@@ -1,0 +1,10 @@
+{
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "target": "es6",
+    "module": "nodenext",
+    "outDir": "dist",
+    "strict": true
+  }
+}

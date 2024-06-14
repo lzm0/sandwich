@@ -134,11 +134,11 @@ const nouns = [
   "workflow",
 ];
 
-function isSorted(array) {
+function isSorted(array: string[]) {
   return array.every((_, i) => i === 0 || array[i] >= array[i - 1]);
 }
 
-function isUnique(array) {
+function isUnique(array: string[]) {
   return new Set(array).size === array.length;
 }
 
@@ -150,7 +150,7 @@ console.assert(isUnique(adjectives));
 console.assert(isUnique(nouns));
 console.assert(adjectives.every((a) => !nouns.includes(a)));
 
-export function generateUsername() {
+export function generateUsername(): string {
   const adjective = adjectives[randomInt(adjectives.length)];
   const noun = nouns[randomInt(nouns.length)];
   return `${adjective}-${noun}`;

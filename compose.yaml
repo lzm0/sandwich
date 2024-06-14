@@ -1,15 +1,15 @@
 services:
   app:
     container_name: app
-    build: ./app
+    build: .
+    hostname: toronto
     ports:
       - "3000:3000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+    init: true
     restart: always
     develop:
       watch:
-        - path: ./app
+        - path: ./src
           action: rebuild
     deploy:
       resources:
@@ -17,22 +17,10 @@ services:
           cpus: '0.1'
           memory: 50M
 
-  sandbox:
-    container_name: sandbox
-    build: ./sandbox
-    hostname: ubuntu
-    init: true
-    tty: true
-    security_opt:
-      - no-new-privileges:true
-    network_mode: none
-    restart: always
-    develop:
-      watch:
-        - path: ./sandbox
-          action: rebuild
-    deploy:
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 50M
+  restarter:
+    container_name: restarter
+    image: docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: >
+      sh -c "while sleep 1800; do docker restart app; done"
