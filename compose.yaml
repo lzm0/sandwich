@@ -20,6 +20,8 @@ services:
   restarter:
     container_name: restarter
     image: docker
+    depends_on:
+      - app
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: >
