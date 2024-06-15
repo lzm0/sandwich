@@ -12,10 +12,5 @@ COPY . /app/
 RUN npm ci
 RUN npm run build
 
-RUN useradd --create-home --uid 1001 guest
-COPY WELCOME.md /home/guest/README.md
-RUN chmod 644 /home/guest/README.md
-
 ENV PORT=3000
-CMD ["npm", "start"]
-EXPOSE 3000
+ENTRYPOINT sh entrypoint.sh
