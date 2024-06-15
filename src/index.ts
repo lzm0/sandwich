@@ -1,7 +1,6 @@
 import * as pty from "node-pty";
 import { WebSocketServer, WebSocket } from "ws";
 import { generateUsername } from "./username-generator";
-import { exit } from "process";
 
 const SWEEP_INTERVAL = 5 * 1000;
 const MAX_SESSIONS = 10;
